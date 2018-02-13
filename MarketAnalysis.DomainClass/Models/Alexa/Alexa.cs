@@ -15,5 +15,17 @@
         public string Keyword4 { get; set; }
         public string Keyword5 { get; set; }
         public int? Backlinks { get; set; }
+
+        public string ToCSV()
+        {
+            var result = $"{GlobalRank},{IranRank},{RankDiffernce},{ImagePath},{BounceRate},{DailyPageView},{DailyTime},{Keyword1},{Keyword2},{Keyword3},{Keyword4},{Keyword5},{Backlinks}";
+            return result;
+        }
+
+        public string TitleCSV()
+        {
+            var result = $"رتبه جهانی,رتبه ایران,اختلاف رتبه,آدرس تصویر,نرخ خروجی,بازدید در روز,زمان در روز,کلمه کلیدی۱,کلمه کلیدی۲,کلمه کلیدی۳,کلمه کلیدی۴,کلمه کلیدی۵,تعداد ارجاعات";
+            return result;
+        }
     }
 }

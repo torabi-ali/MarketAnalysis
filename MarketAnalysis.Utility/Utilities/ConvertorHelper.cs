@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MarketAnalysis.Utility
@@ -92,6 +93,32 @@ namespace MarketAnalysis.Utility
         public static int ToASCIIcode(this char ch)
         {
             return Convert.ToInt32(ch);
+        }
+
+        public static string ToCSV<T>(this IEnumerable<T> instance)
+        {
+            StringBuilder csv;
+
+            if (instance != null)
+            {
+                csv = new StringBuilder();
+                instance.ForEach(v => csv.AppendFormat("{0},", v));
+                return csv.ToString(0, csv.Length - 1);
+            }
+            return null;
+        }
+
+        public static string ToCSV<T>(this IEnumerable<T> instance, char separator)
+        {
+            StringBuilder csv;
+
+            if (instance != null)
+            {
+                csv = new StringBuilder();
+                instance.ForEach(value => csv.AppendFormat("{0}{1}", value, separator));
+                return csv.ToString(0, csv.Length - 1);
+            }
+            return null;
         }
 
         public static string ToText(this int digit)
