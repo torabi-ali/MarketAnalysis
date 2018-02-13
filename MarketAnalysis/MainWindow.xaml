@@ -1,0 +1,11 @@
+﻿<Window x:Class="MarketAnalysis.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" WindowState="Normal" WindowStyle="ThreeDBorderWindow" Height="350" Width="525">
+    <Grid>
+        <WebBrowser Name="browser" Source="http://www.google.com"/>
+    </Grid>
+</Window>
