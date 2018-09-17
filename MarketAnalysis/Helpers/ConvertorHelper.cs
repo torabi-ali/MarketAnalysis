@@ -1,26 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
-using System.Text.RegularExpressions;
 
-namespace MarketAnalysis.Utility
+namespace MarketAnalysis.Helpers
 {
     public static class ConvertorHelper
     {
-        public static string ConvertToString(IEnumerable<ValueType> value)
-        {
-            return string.Join("-", value);
-        }
-        public static string ConvertToString(DateTime value)
-        {
-            return value.ToString(CultureInfo.InvariantCulture);
-        }
-        public static string ConvertToString(TimeSpan value, bool includeNow = false)
-        {
-            return value.ToString("c", CultureInfo.InvariantCulture);
-        }
-
         public static int TryToInt(this object obj)
         {
             var result = 0;
@@ -34,7 +19,7 @@ namespace MarketAnalysis.Utility
             return result;
         }
 
-        public static Decimal TryToDecimal(this object obj)
+        public static decimal TryToDecimal(this object obj)
         {
             var result = 0M;
             try
@@ -61,6 +46,7 @@ namespace MarketAnalysis.Utility
         {
             return Convert.ToBoolean(obj);
         }
+
         public static int BooleanToInt(this Boolean obj)
         {
             return obj == true ? 1 : 0;
@@ -237,68 +223,6 @@ namespace MarketAnalysis.Utility
                 }
             }
             return result;
-        }
-
-        public static string ToPrice(this object dec)
-        {
-            var Src = dec.ToString();
-            Src = Src.Replace(".0000", "");
-            if (!Src.Contains("."))
-            {
-                Src = Src + ".00";
-            }
-            var price = Src.Split('.');
-
-            if (price[1].Length >= 2)
-            {
-                price[1] = price[1].Substring(0, 2);
-                price[1] = price[1].Replace("00", "");
-            }
-
-            string Temp = null;
-
-            var i = 0;
-
-            if ((price[0].Length % 3) >= 1)
-            {
-                Temp = price[0].Substring(0, (price[0].Length % 3));
-                for (i = 0; i <= (price[0].Length / 3) - 1; i++)
-                {
-                    Temp += "," + price[0].Substring((price[0].Length % 3) + (i * 3), 3);
-                }
-            }
-            else
-            {
-                for (i = 0; i <= (price[0].Length / 3) - 1; i++)
-                {
-                    Temp += price[0].Substring((price[0].Length % 3) + (i * 3), 3) + ",";
-                }
-                Temp = Temp.Substring(0, Temp.Length - 1);
-                // Temp = price(0)
-                //If price(1).Length > 0 Then
-                //    Return price(0) + "." + price(1)
-                //End If
-            }
-            if (price[1].Length > 0)
-            {
-                return Temp + "." + price[1];
-            }
-            return Temp;
-        }
-        public static string ToPriceString(this object obj)
-        {
-            return obj.ToString().Trim('0').Trim('.');
-        }
-
-        public static string ConvertUrlsToLinks(string str)
-        {
-            if (string.IsNullOrEmpty(str))
-                return str;
-            string regex = @"((www\.|(http|https|ftp|news|file)+\:\/\/)[&#95;.a-z0-9-]+\.[a-z0-9\/&#95;:@=.+?,##%&~-]*[^.|\'|\# |!|\(|?|,| |>|<|;|\)])";
-
-            var html = new Regex(regex, RegexOptions.IgnoreCase).Replace(str, "<a href=\"$1\" target=\"&#95;blank\">$1</a><br />").Replace("href=\"www", "href=\"http://www");
-
-            return html;
         }
     }
 }

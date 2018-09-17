@@ -1,9 +1,8 @@
 ﻿using HtmlAgilityPack;
-using MarketAnalysis.DomainClass.Models;
-using MarketAnalysis.Utility;
+using MarketAnalysis.Helpers;
 using System.Threading;
 
-namespace MarketAnalysis
+namespace MarketAnalysis.Model
 {
     public class Analyze
     {
@@ -79,8 +78,8 @@ namespace MarketAnalysis
 
             var pageSpeed = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageSpeed)?.InnerText.RemoveNumericFormat().TryToInt();
             var yslow = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.YSlow)?.InnerText.RemoveNumericFormat().TryToInt();
-            var pageLoad = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageLoad)?.InnerText.RemoveNumericFormat().Replace("s", "").ToDecimal();
-            var pageSize = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageSize)?.InnerText.RemoveNumericFormat().Replace("MB", "").ToDecimal();
+            var pageLoad = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageLoad)?.InnerText.RemoveNumericFormat().Replace("s", "").TryToDecimal();
+            var pageSize = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageSize)?.InnerText.RemoveNumericFormat().Replace("MB", "").TryToDecimal();
 
             var gtmetrix = new GTmetrix
             {
@@ -180,8 +179,8 @@ namespace MarketAnalysis
             var iranRank = doc.DocumentNode.SelectSingleNode(AlexaSelector.IranRank)?.InnerText.RemoveNumericFormat().TryToInt();
             var rankDiffernce = doc.DocumentNode.SelectSingleNode(AlexaSelector.RankDiffernce)?.InnerText.RemoveNumericFormat().TryToInt();
             var imagePath = doc.DocumentNode.SelectSingleNode(AlexaSelector.ImagePath)?.InnerText.Trim();
-            var bounceRate = doc.DocumentNode.SelectSingleNode(AlexaSelector.BounceRate)?.InnerText.RemoveNumericFormat().ToDecimal();
-            var dailyPageView = doc.DocumentNode.SelectSingleNode(AlexaSelector.DailyPageView)?.InnerText.ToDecimal();
+            var bounceRate = doc.DocumentNode.SelectSingleNode(AlexaSelector.BounceRate)?.InnerText.RemoveNumericFormat().TryToDecimal();
+            var dailyPageView = doc.DocumentNode.SelectSingleNode(AlexaSelector.DailyPageView)?.InnerText.TryToDecimal();
             var dailyTime = doc.DocumentNode.SelectSingleNode(AlexaSelector.DailyTime)?.InnerText.Split(':')[0].TryToInt();
             var keyword1 = doc.DocumentNode.SelectSingleNode(AlexaSelector.Keyword1)?.InnerText.Trim();
             var keyword2 = doc.DocumentNode.SelectSingleNode(AlexaSelector.Keyword2)?.InnerText.Trim();

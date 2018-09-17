@@ -53,11 +53,5 @@
     <Compile Include="Models\SiteRankData\SiteRankDataSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MarketAnalysis.Utility\MarketAnalysis.Utility.csproj">
-      <Project>{86100E3F-2598-4597-A075-DF2BCE74BAC8}</Project>
-      <Name>MarketAnalysis.Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

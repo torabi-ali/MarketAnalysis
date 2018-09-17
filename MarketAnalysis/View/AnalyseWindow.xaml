@@ -1,0 +1,26 @@
+﻿<Window x:Class="MarketAnalysis.View.AnalyseWindow" WindowStartupLocation="CenterScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:MarketAnalysis.Helpers"
+        xmlns:vm="clr-namespace:MarketAnalysis.ViewModel"
+        mc:Ignorable="d"
+        DataContext="{DynamicResource AnalyseViewModel}"
+        helpers:DialogCloser.DialogResult="{Binding CloseWindowFlag}"
+        Title="بررسی بازار" Name="mainWindow" Height="300" Width="400" FontFamily="{StaticResource IRANSans}">
+    <Window.Resources>
+        <vm:AnalyseViewModel x:Key="AnalyseViewModel"/>
+    </Window.Resources>
+    <Grid FlowDirection="RightToLeft" Margin="3,3,3,3">
+        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Top" Width="325" Height="200" Margin="0,15,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="نام" Width="75" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="آدرس" Width="150" Binding="{Binding Url}" />
+                <DataGridTextColumn Header="تهدید (٪)" Width="75" Binding="{Binding ThreatPercentage}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnPreviousLevel" Content="قبلی" Command="{Binding PreviousLevelCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="50" Height="25" Margin="0,0,10,10"/>
+        <Button Name="btnNextLevel" Content="بعدی" Command="{Binding NextLevelCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="25" Margin="10,0,0,10"/>
+    </Grid>
+</Window>
