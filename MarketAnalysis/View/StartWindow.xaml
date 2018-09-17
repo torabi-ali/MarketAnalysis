@@ -13,10 +13,10 @@
         <vm:StartViewModel x:Key="StartViewModel"/>
     </Window.Resources>
     <Grid FlowDirection="RightToLeft" Margin="3,3,3,3">
-        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Top" Width="325" Height="200" Margin="0,15,0,0">
+        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="نام" Width="75" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="آدرس" Width="150" Binding="{Binding Url}" />
+                <DataGridTextColumn Header="نام" Width="100" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="آدرس" Width="175" Binding="{Binding Url}" />
                 <DataGridTextColumn Header="تهدید (٪)" Width="75" Binding="{Binding ThreatPercentage}" />
             </DataGrid.Columns>
         </DataGrid>

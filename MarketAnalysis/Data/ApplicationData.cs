@@ -50,6 +50,25 @@ namespace MarketAnalysis.Data
             }
         }
 
+        public void UpdateOrInsert(Company company)
+        {
+            using (var db = new LiteDatabase(DbPath))
+            {
+                var companies = db.GetCollection<Company>("Companies");
+                var update = companies.Update(company);
+                if(!update)
+                    companies.Insert(company);
+            }
+        }
+
+        public void UpdateOrInsert(List<Company> companies)
+        {
+            foreach (var item in companies)
+            {
+                UpdateOrInsert(item);
+            }
+        }
+
         public IEnumerable<Company> GetAll()
         {
             using (var db = new LiteDatabase(DbPath))

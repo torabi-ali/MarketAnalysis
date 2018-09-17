@@ -1,4 +1,5 @@
 ﻿using MarketAnalysis.Helpers;
+using MarketAnalysis.Model;
 using MarketAnalysis.View;
 
 namespace MarketAnalysis.ViewModel
@@ -10,22 +11,28 @@ namespace MarketAnalysis.ViewModel
 
         public AnalyseViewModel()
         {
-            LoadState();
-
             PreviousLevelCommand = new RelayCommand(PreviousLevel);
             NextLevelCommand = new RelayCommand(NextLevel);
+
+            Analyse();
         }
 
-        void PreviousLevel(object parameter)
+        public void Analyse()
         {
-            SaveState();
+            for (int i = 0; i < CompanyList.Count; i++)
+            {
+                CompanyList[i] = CompanyList[i].FullAnalyze();
+            }
+        }
 
+        private void PreviousLevel(object parameter)
+        {
             var startWindow = new StartWindow();
             startWindow.Show();
             CloseWindow();
         }
 
-        void NextLevel(object parameter)
+        private void NextLevel(object parameter)
         {
         }
     }

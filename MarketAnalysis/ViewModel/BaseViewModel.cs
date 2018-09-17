@@ -18,6 +18,7 @@ namespace MarketAnalysis.ViewModel
         public BaseViewModel()
         {
             CompanyList = new ObservableCollection<Company>();
+            LoadState();
         }
 
         internal void RaisePropertyChanged(string prop)
@@ -37,6 +38,8 @@ namespace MarketAnalysis.ViewModel
 
         public virtual void CloseWindow(bool? result = true)
         {
+            SaveState();
+
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
                 CloseWindowFlag = CloseWindowFlag == null ? true : !CloseWindowFlag;
@@ -48,7 +51,7 @@ namespace MarketAnalysis.ViewModel
             ApplicationData applicationData = new ApplicationData();
             foreach(var item in CompanyList)
             {
-                applicationData.Insert(item);
+                applicationData.UpdateOrInsert(item);
             }
         }
 

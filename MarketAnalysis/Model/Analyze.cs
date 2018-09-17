@@ -4,21 +4,18 @@ using System.Threading;
 
 namespace MarketAnalysis.Model
 {
-    public class Analyze
+    public static class Analyze
     {
         private static Company Company;
-        private static Alexa Alexa;
-        private static SiteRankData SiteRankData;
-        private static SimilarWeb SimilarWeb;
-        private static GTmetrix GTmetrix;
-        private static Whois Whois;
+        //private static Alexa Alexa;
+        //private static SiteRankData SiteRankData;
+        //private static SimilarWeb SimilarWeb;
+        //private static GTmetrix GTmetrix;
+        //private static Whois Whois;
 
-        public Company FullAnalyze(string inputSite)
+        public static Company FullAnalyze(this Company company)
         {
             Company = new Company();
-
-            Company.Name = inputSite.Split('.')[0].Trim();
-            Company.Url = inputSite;
 
             Thread alexaThread = new Thread(new ThreadStart(AlexaAnalyze));
             alexaThread.Start();
@@ -36,12 +33,6 @@ namespace MarketAnalysis.Model
             similarWebThread.Join();
             gtmetrixThread.Join();
             whoisThread.Join();
-
-            Company.Alexa = Alexa;
-            Company.SiteRankData = SiteRankData;
-            Company.SimilarWeb = SimilarWeb;
-            Company.GTmetrix = GTmetrix;
-            Company.Whois = Whois;
 
             return Company;
         }
@@ -66,7 +57,7 @@ namespace MarketAnalysis.Model
                 Email = Email
             };
 
-            Whois = whois;
+            Company.Whois = whois;
         }
 
         private static void GTmetrixAnalyze()
@@ -89,7 +80,7 @@ namespace MarketAnalysis.Model
                 PageSize = pageSize
             };
 
-            GTmetrix = gtmetrix;
+            Company.GTmetrix = gtmetrix;
         }
 
         private static void SimilarWebAnalyze()
@@ -146,7 +137,7 @@ namespace MarketAnalysis.Model
                 TopOrganicKeywords5 = topOrganicKeywords5
             };
 
-            SimilarWeb = similarWeb;
+            Company.SimilarWeb = similarWeb;
         }
 
         private static void SiteRankDataAnalyze()
@@ -165,7 +156,7 @@ namespace MarketAnalysis.Model
                 CurrentAlexaRank = currentAlexaRank
             };
 
-            SiteRankData = siteRankData;
+            Company.SiteRankData = siteRankData;
         }
 
         private static void AlexaAnalyze()
@@ -206,7 +197,7 @@ namespace MarketAnalysis.Model
                 Backlinks = backlinks
             };
 
-            Alexa = alexa;
+            Company.Alexa = alexa;
         }
     }
 }
