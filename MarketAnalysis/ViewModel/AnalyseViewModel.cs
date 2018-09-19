@@ -1,39 +1,49 @@
 ﻿using MarketAnalysis.Helpers;
 using MarketAnalysis.Model;
 using MarketAnalysis.View;
+using System.Threading.Tasks;
 
 namespace MarketAnalysis.ViewModel
 {
     public class AnalyseViewModel : BaseViewModel
     {
         public RelayCommand PreviousLevelCommand { get; set; }
-        public RelayCommand NextLevelCommand { get; set; }
+        public RelayCommand StartAnalyseCommand { get; set; }
 
         public AnalyseViewModel()
         {
             PreviousLevelCommand = new RelayCommand(PreviousLevel);
-            NextLevelCommand = new RelayCommand(NextLevel);
-
-            Analyse();
+            StartAnalyseCommand = new RelayCommand(StartAnalyse);
         }
 
-        public void Analyse()
+        public Company Analyse(Company company)
         {
-            for (int i = 0; i < CompanyList.Count; i++)
-            {
-                CompanyList[i] = CompanyList[i].FullAnalyze();
-            }
+            var progressChunk = (double)1 / CompanyList.Count * 100;
+            company = company.FullAnalyse();
+            CurrentProgress += progressChunk;
+
+            return company;
         }
 
         private void PreviousLevel(object parameter)
         {
+            CloseWindow();
+
             var startWindow = new StartWindow();
             startWindow.Show();
-            CloseWindow();
         }
 
-        private void NextLevel(object parameter)
+        private async void StartAnalyse(object parameter)
         {
+            var company = new Company();
+            for (int i = CompanyList.Count - 1; i >= 0; i--)
+            {
+                await Task.Run(() => company = Analyse(CompanyList[i]));
+                CompanyList.RemoveAt(i);
+                CompanyList.Add(company);
+            }
+
+            await SaveStateAsync();
         }
     }
 }

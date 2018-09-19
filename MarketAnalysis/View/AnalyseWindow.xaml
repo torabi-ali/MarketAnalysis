@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         DataContext="{DynamicResource AnalyseViewModel}"
         helpers:DialogCloser.DialogResult="{Binding CloseWindowFlag}"
-        Title="بررسی بازار" Name="mainWindow" Height="500" Width="1200" FontFamily="{StaticResource IRANSans}">
+        Title="بررسی بازار" Name="startWindow" Height="500" Width="1200" FontFamily="{StaticResource IRANSans}">
     <Window.Resources>
         <vm:AnalyseViewModel x:Key="AnalyseViewModel"/>
     </Window.Resources>
@@ -31,6 +31,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Name="btnPreviousLevel" Content="قبلی" Command="{Binding PreviousLevelCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="50" Height="25" Margin="0,0,10,10"/>
-        <Button Name="btnNextLevel" Content="بعدی" Command="{Binding NextLevelCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="25" Margin="10,0,0,10"/>
+        <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="{Binding CurrentProgress, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="750" Height="25" Margin="0,0,0,10"/>
+        <Button Name="btnStartAnalyse" Content="شروع آنالیز" Command="{Binding StartAnalyseCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="25" Margin="10,0,0,10"/>
     </Grid>
 </Window>

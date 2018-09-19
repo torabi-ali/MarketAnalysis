@@ -1,31 +1,47 @@
 ﻿using HtmlAgilityPack;
 using MarketAnalysis.Helpers;
+using System;
 using System.Threading;
 
 namespace MarketAnalysis.Model
 {
-    public static class Analyze
+    public static class Analyse
     {
-        private static Company Company;
-        //private static Alexa Alexa;
-        //private static SiteRankData SiteRankData;
-        //private static SimilarWeb SimilarWeb;
-        //private static GTmetrix GTmetrix;
-        //private static Whois Whois;
-
-        public static Company FullAnalyze(this Company company)
+        public static Company FullAnalyse(this Company company)
         {
-            Company = new Company();
-
-            Thread alexaThread = new Thread(new ThreadStart(AlexaAnalyze));
+            var alexaThread = new Thread(
+                () =>
+                {
+                    company.Alexa = AlexaAnalyse(company.Url);
+                });
             alexaThread.Start();
-            Thread siteRankDataThread = new Thread(new ThreadStart(SiteRankDataAnalyze));
+
+            var siteRankDataThread = new Thread(
+                () =>
+                {
+                    company.SiteRankData = SiteRankDataAnalyse(company.Url);
+                });
             siteRankDataThread.Start();
-            Thread similarWebThread = new Thread(new ThreadStart(SimilarWebAnalyze));
+
+            var similarWebThread = new Thread(
+                () =>
+                {
+                    company.SimilarWeb = SimilarWebAnalyse(company.Url);
+                });
             similarWebThread.Start();
-            Thread gtmetrixThread = new Thread(new ThreadStart(GTmetrixAnalyze));
+
+            var gtmetrixThread = new Thread(
+                () =>
+                {
+                    company.GTmetrix = GTmetrixAnalyse(company.Url);
+                });
             gtmetrixThread.Start();
-            Thread whoisThread = new Thread(new ThreadStart(WhoisAnalyze));
+
+            var whoisThread = new Thread(
+                () =>
+                {
+                    company.Whois = WhoisAnalyse(company.Url);
+                });
             whoisThread.Start();
 
             alexaThread.Join();
@@ -34,15 +50,23 @@ namespace MarketAnalysis.Model
             gtmetrixThread.Join();
             whoisThread.Join();
 
-            return Company;
+            return company;
         }
 
-        private static void WhoisAnalyze()
+        private static Whois WhoisAnalyse(string companyUrl)
         {
-            var uri = @"https://www.whois.com/whois/" + Company.Url;
+            var uri = @"https://www.whois.com/whois/" + companyUrl;
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(uri);
+            HtmlDocument doc = new HtmlDocument();
+
+            try
+            {
+                doc = web.Load(uri);
+            }
+            catch (Exception)
+            {
+            }
 
             var ceo = doc.DocumentNode.SelectSingleNode(WhoisSelector.CEO)?.InnerText.ToString();
             var city = doc.DocumentNode.SelectSingleNode(WhoisSelector.City)?.InnerText.ToString();
@@ -57,15 +81,23 @@ namespace MarketAnalysis.Model
                 Email = Email
             };
 
-            Company.Whois = whois;
+            return whois;
         }
 
-        private static void GTmetrixAnalyze()
+        private static GTmetrix GTmetrixAnalyse(string companyUrl)
         {
-            var uri = @"https://gtmetrix.com/reports/" + Company.Url;
+            var uri = @"https://gtmetrix.com/reports/" + companyUrl;
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(uri);
+            HtmlDocument doc = new HtmlDocument();
+
+            try
+            {
+                doc = web.Load(uri);
+            }
+            catch (Exception)
+            {
+            }
 
             var pageSpeed = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.PageSpeed)?.InnerText.RemoveNumericFormat().TryToInt();
             var yslow = doc.DocumentNode.SelectSingleNode(GTmetrixSelector.YSlow)?.InnerText.RemoveNumericFormat().TryToInt();
@@ -80,15 +112,23 @@ namespace MarketAnalysis.Model
                 PageSize = pageSize
             };
 
-            Company.GTmetrix = gtmetrix;
+            return gtmetrix;
         }
 
-        private static void SimilarWebAnalyze()
+        private static SimilarWeb SimilarWebAnalyse(string companyUrl)
         {
-            var uri = @"https://www.similarweb.com/Company.Url/" + Company.Url;
+            var uri = @"https://www.similarweb.com/" + companyUrl;
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(uri);
+            HtmlDocument doc = new HtmlDocument();
+
+            try
+            {
+                doc = web.Load(uri);
+            }
+            catch (Exception)
+            {
+            }
 
             var direct = doc.DocumentNode.SelectSingleNode(SimilarWebSelector.Direct)?.InnerText.RemoveNumericFormat().TryToInt();
             var display = doc.DocumentNode.SelectSingleNode(SimilarWebSelector.Display)?.InnerText.RemoveNumericFormat().TryToInt();
@@ -137,15 +177,23 @@ namespace MarketAnalysis.Model
                 TopOrganicKeywords5 = topOrganicKeywords5
             };
 
-            Company.SimilarWeb = similarWeb;
+            return similarWeb;
         }
 
-        private static void SiteRankDataAnalyze()
+        private static SiteRankData SiteRankDataAnalyse(string companyUrl)
         {
-            var uri = @"https://siterankdata.com/" + Company.Url;
+            var uri = @"https://siterankdata.com/" + companyUrl;
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(uri);
+            HtmlDocument doc = new HtmlDocument();
+
+            try
+            {
+                doc = web.Load(uri);
+            }
+            catch (Exception)
+            {
+            }
 
             var dailyUniqueVisitors = doc.DocumentNode.SelectSingleNode(SiteRankDataSelector.DailyUniqueVisitors)?.InnerText.RemoveNumericFormat().TryToInt();
             var currentAlexaRank = doc.DocumentNode.SelectSingleNode(SiteRankDataSelector.CurrentAlexaRank)?.InnerText.RemoveNumericFormat().TryToInt();
@@ -156,15 +204,23 @@ namespace MarketAnalysis.Model
                 CurrentAlexaRank = currentAlexaRank
             };
 
-            Company.SiteRankData = siteRankData;
+            return siteRankData;
         }
 
-        private static void AlexaAnalyze()
+        private static Alexa AlexaAnalyse(string companyUrl)
         {
-            var uri = @"https://www.alexa.com/siteinfo/" + Company.Url;
+            var uri = @"https://www.alexa.com/siteinfo/" + companyUrl;
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(uri);
+            HtmlDocument doc = new HtmlDocument();
+
+            try
+            {
+                doc = web.Load(uri);
+            }
+            catch (Exception)
+            {
+            }
 
             var globalRank = doc.DocumentNode.SelectSingleNode(AlexaSelector.GlobalRank)?.InnerText.RemoveNumericFormat().TryToInt();
             var iranRank = doc.DocumentNode.SelectSingleNode(AlexaSelector.IranRank)?.InnerText.RemoveNumericFormat().TryToInt();
@@ -197,7 +253,7 @@ namespace MarketAnalysis.Model
                 Backlinks = backlinks
             };
 
-            Company.Alexa = alexa;
+            return alexa;
         }
     }
 }
