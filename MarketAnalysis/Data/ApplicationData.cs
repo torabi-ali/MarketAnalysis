@@ -1,5 +1,6 @@
 ﻿using LiteDB;
 using MarketAnalysis.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -60,7 +61,7 @@ namespace MarketAnalysis.Data
             {
                 var companies = db.GetCollection<Company>("Companies");
                 var update = companies.Update(company);
-                if(!update)
+                if (!update)
                     companies.Insert(company);
             }
         }
@@ -84,16 +85,31 @@ namespace MarketAnalysis.Data
 
         public void SaveToCSV(List<Company> companies)
         {
-            var csv = new Company().TitleCSV();
+            var data = new Company().TitleCSV();
             foreach (var item in companies)
             {
-                csv += item.CompanyToCSV();
+                data += item.CompanyToCSV();
             }
 
             var filepath = $"{DataFolder}\\{CsvName}";
+
+            if (!File.Exists(filepath))
+            {
+                try
+                {
+                    FileStream fs = File.Create(filepath);
+                    fs.Close();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            File.WriteAllText(filepath, data, Encoding.UTF8);
+
+
             using (StreamWriter writer = new StreamWriter(filepath, true, Encoding.UTF8))
             {
-                writer.WriteLine(csv);
+                writer.WriteLine(data);
             }
         }
     }

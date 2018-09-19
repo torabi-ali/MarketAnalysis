@@ -49,7 +49,7 @@ namespace MarketAnalysis.ViewModel
             await SaveStateAsync();
             await SaveToFileAsync();
 
-            MessageBox.Show("اصلاحات در فایل و دیتابیس ذخیره شد", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("اطلاعات در فایل و دیتابیس ذخیره شد", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
