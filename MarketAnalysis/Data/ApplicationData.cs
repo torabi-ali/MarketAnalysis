@@ -9,11 +9,15 @@ namespace MarketAnalysis.Data
 {
     public class ApplicationData
     {
+        private string DataFolder;
+        private const string DbName = "MarketAnalysis.db";
+        private const string CsvName = "MarketAnalysis.csv";
         private string DbPath;
 
         public ApplicationData()
         {
-            DbPath = $"{GetFolderPath(SpecialFolder.Desktop)}/MarketAnalysis.db";
+            DataFolder = GetFolderPath(SpecialFolder.Desktop);
+            DbPath = $"{DataFolder}\\{DbName}";
         }
 
         public void Insert(Company company)
@@ -86,7 +90,7 @@ namespace MarketAnalysis.Data
                 csv += item.CompanyToCSV();
             }
 
-            var filepath = $"{DbPath}\\Output.csv";
+            var filepath = $"{DataFolder}\\{CsvName}";
             using (StreamWriter writer = new StreamWriter(filepath, true, Encoding.UTF8))
             {
                 writer.WriteLine(csv);

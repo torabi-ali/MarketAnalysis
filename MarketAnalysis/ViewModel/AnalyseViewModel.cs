@@ -1,7 +1,9 @@
-﻿using MarketAnalysis.Helpers;
+﻿using MarketAnalysis.Data;
+using MarketAnalysis.Helpers;
 using MarketAnalysis.Model;
 using MarketAnalysis.View;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MarketAnalysis.ViewModel
 {
@@ -35,6 +37,7 @@ namespace MarketAnalysis.ViewModel
 
         private async void StartAnalyse(object parameter)
         {
+            var applicationData = new ApplicationData();
             var company = new Company();
             for (int i = CompanyList.Count - 1; i >= 0; i--)
             {
@@ -44,6 +47,9 @@ namespace MarketAnalysis.ViewModel
             }
 
             await SaveStateAsync();
+            await SaveToFileAsync();
+
+            MessageBox.Show("اصلاحات در فایل و دیتابیس ذخیره شد", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

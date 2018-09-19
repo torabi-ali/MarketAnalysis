@@ -17,7 +17,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="نام" Width="75" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="رتبه جهانی" Width="75" Binding="{Binding Alexa.GlobalRank}" />
-                <DataGridTextColumn Header="رتبه ایران" Width="75" Binding="{Binding Alexa.IranRank}" />
+                <DataGridTextColumn Header="رتبه ایران" Width="75" Binding="{Binding Alexa.IranRank}" SortDirection="Ascending"/>
                 <DataGridTextColumn Header="بازدید در روز" Width="75" Binding="{Binding SiteRankData.DailyUniqueVisitors}" />
                 <DataGridTextColumn Header="بازدید مستقیم" Width="100" Binding="{Binding SimilarWeb.Direct}" />
                 <DataGridTextColumn Header="بازدید ارجاعی" Width="100" Binding="{Binding SimilarWeb.Referral}" />

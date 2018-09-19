@@ -3,6 +3,7 @@ using MarketAnalysis.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -93,6 +94,18 @@ namespace MarketAnalysis.ViewModel
             {
                 await Task.Run(() => CompanyList.Add(item));
             }
+        }
+
+        public void SaveToFile()
+        {
+            ApplicationData applicationData = new ApplicationData();
+            applicationData.SaveToCSV(CompanyList.ToList());
+        }
+
+        public async Task SaveToFileAsync()
+        {
+            ApplicationData applicationData = new ApplicationData();
+            await Task.Run(() => applicationData.SaveToCSV(CompanyList.ToList()));
         }
     }
 }
