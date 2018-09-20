@@ -274,7 +274,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MarketAnalysis"
         "ProductCode" = "8:{F7798613-4823-4FB6-A586-B7E8DF130B34}"
-        "PackageCode" = "8:{E5B360F8-7F07-43A0-B023-4605D1EDB007}"
+        "PackageCode" = "8:{48D91191-B029-44B8-B129-003EB0E897DA}"
         "UpgradeCode" = "8:{168644A4-6B13-4CB2-A255-6278BEC5FE59}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -394,6 +394,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_69BC1D82130F4EDBB590F8035CA0BD58"
+            {
+            "Name" = "8:MarketAnalysis"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_83CD2BE6E3B34538B53446867989320F"
+            "Folder" = "8:_904D5F85571349009659D58212BA14EE"
+            "WorkingFolder" = "8:_FB265467D6BF4F36AF5F414BBD49A7C3"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
