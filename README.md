@@ -1,4 +1,5 @@
 <div dir="rtl">
+  
 # MarketAnalysis یا تحلیل‌گر بازار
 
 ## هدف برنامه
