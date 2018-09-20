@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketAnalysis", "MarketAnalysis\MarketAnalysis.csproj", "{933B4058-9A69-46C6-AC21-091B876DB762}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MarketAnalysis.Setup", "MarketAnalysis.Setup\MarketAnalysis.Setup.vdproj", "{9293A527-3E4E-4C7F-B25C-26523AF81161}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,9 @@ Global
 		{933B4058-9A69-46C6-AC21-091B876DB762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{933B4058-9A69-46C6-AC21-091B876DB762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{933B4058-9A69-46C6-AC21-091B876DB762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9293A527-3E4E-4C7F-B25C-26523AF81161}.Debug|Any CPU.ActiveCfg = Release
+		{9293A527-3E4E-4C7F-B25C-26523AF81161}.Debug|Any CPU.Build.0 = Release
+		{9293A527-3E4E-4C7F-B25C-26523AF81161}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
