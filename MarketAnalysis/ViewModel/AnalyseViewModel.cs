@@ -2,6 +2,7 @@
 using MarketAnalysis.Helpers;
 using MarketAnalysis.Model;
 using MarketAnalysis.View;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,13 +15,15 @@ namespace MarketAnalysis.ViewModel
 
         public AnalyseViewModel()
         {
+            LoadState();
+
             PreviousLevelCommand = new RelayCommand(PreviousLevel);
             StartAnalyseCommand = new RelayCommand(StartAnalyse);
         }
 
         public Company Analyse(Company company)
         {
-            var progressChunk = (double)1 / CompanyList.Count * 100;
+            var progressChunk = 1 / CompanyList.Count * 100.0;
             company = company.FullAnalyse();
             CurrentProgress += progressChunk;
 

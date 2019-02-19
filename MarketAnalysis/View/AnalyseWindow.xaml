@@ -8,12 +8,18 @@
         mc:Ignorable="d"
         DataContext="{DynamicResource AnalyseViewModel}"
         helpers:DialogCloser.DialogResult="{Binding CloseWindowFlag}"
-        Title="بررسی بازار" Name="startWindow" Height="500" Width="1200" FontFamily="{StaticResource IRANSans}">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        Title="بررسی بازار" Name="startWindow" Height="600" Width="1200" FontFamily="{StaticResource Vazir}">
     <Window.Resources>
         <vm:AnalyseViewModel x:Key="AnalyseViewModel"/>
     </Window.Resources>
     <Grid FlowDirection="RightToLeft" Margin="3,3,3,3">
-        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" IsReadOnly="True"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10">
+        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" IsReadOnly="True" Width="Auto" Height="475" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="نام" Width="75" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="رتبه جهانی" Width="75" Binding="{Binding Alexa.GlobalRank}" />
@@ -30,8 +36,8 @@
                 <DataGridTextColumn Header="تلفن" Width="75" Binding="{Binding Whois.PhoneNumber}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="btnPreviousLevel" Content="قبلی" Command="{Binding PreviousLevelCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="50" Height="25" Margin="0,0,10,10"/>
-        <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="{Binding CurrentProgress, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="750" Height="25" Margin="0,0,0,10"/>
-        <Button Name="btnStartAnalyse" Content="شروع آنالیز" Command="{Binding StartAnalyseCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="25" Margin="10,0,0,10"/>
+        <Button Name="btnStartAnalyse" Command="{Binding StartAnalyseCommand}" Content="تأیید" VerticalAlignment="Bottom" HorizontalAlignment="Left"  Width="100" Height="30" Margin="10" Style="{StaticResource MaterialDesignRaisedAccentButton}" TabIndex="1" />
+        <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="{Binding CurrentProgress, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="750" Height="30" Margin="10" />
+        <Button Name="btnPreviousLevel" Command="{Binding PreviousLevelCommand}" Content="قبلی" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Width="100" Height="30" Margin="10" TabIndex="2" />
     </Grid>
 </Window>

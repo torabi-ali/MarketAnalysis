@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace MarketAnalysis.Helpers
+namespace MarketAnalysis.Utility
 {
     /// <summary>
     /// Queryable extensions
@@ -21,17 +21,12 @@ namespace MarketAnalysis.Helpers
         public static IQueryable<TSource> DistinctBy<TSource, TKey>(this IQueryable<TSource> source, Expression<Func<TSource, TKey>> keySelector)
         {
             return source.GroupBy(p => keySelector).Select(p => p.FirstOrDefault());
-
-            //var query = people.DistinctBy(p => p.Id);
-            //var query = people.DistinctBy(p => new { p.Id, p.Name });
         }
+
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             var seenKeys = new HashSet<TKey>();
             return source.Where(element => seenKeys.Add(keySelector(element)));
-
-            //var query = people.DistinctBy(p => p.Id);
-            //var query = people.DistinctBy(p => new { p.Id, p.Name });
         }
 
         private static void Each<T>(this IEnumerable<T> enumerable, Action<T> action)
@@ -39,6 +34,70 @@ namespace MarketAnalysis.Helpers
             foreach (var item in enumerable)
             {
                 action(item);
+            }
+        }
+
+        public static IOrderedQueryable<T> ApplyOrder<T>(IQueryable<T> source, string property, string methodName)
+        {
+            var props = property.Split('.');
+
+            var type = typeof(T);
+
+            var arg = Expression.Parameter(type, "x");
+
+            Expression expr = arg;
+
+            foreach (var prop in props)
+            {
+                // use reflection (not ComponentModel) to mirror LINQ
+                var pi = type.GetProperty(prop);
+                expr = Expression.Property(expr, pi);
+                type = pi.PropertyType;
+            }
+            var delegateType = typeof(Func<,>).MakeGenericType(typeof(T), type);
+
+            var lambda = Expression.Lambda(delegateType, expr, arg);
+
+            var result = typeof(Queryable).GetMethods().Single(
+                method => method.Name == methodName
+                          && method.IsGenericMethodDefinition
+                          && method.GetGenericArguments().Length == 2
+                          && method.GetParameters().Length == 2)
+                .MakeGenericMethod(typeof(T), type)
+                .Invoke(null, new object[] { source, lambda });
+            return (IOrderedQueryable<T>)result;
+        }
+
+        public static IEnumerable<t> Randomize<t>(this IEnumerable<t> target)
+        {
+            var random = new Random();
+            return target.OrderBy(x => random.Next());
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        {
+            return source.Shuffle(new Random());
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rng)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (rng == null) throw new ArgumentNullException("rng");
+
+            return source.ShuffleIterator(rng);
+        }
+
+        private static IEnumerable<T> ShuffleIterator<T>(
+            this IEnumerable<T> source, Random rng)
+        {
+            var buffer = source.ToList();
+
+            for (int i = 0; i < buffer.Count; i++)
+            {
+                int j = rng.Next(i, buffer.Count);
+                yield return buffer[j];
+
+                buffer[j] = buffer[i];
             }
         }
 

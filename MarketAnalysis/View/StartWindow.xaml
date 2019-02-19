@@ -8,18 +8,24 @@
         mc:Ignorable="d"
         DataContext="{DynamicResource StartViewModel}"
         helpers:DialogCloser.DialogResult="{Binding CloseWindowFlag}"
-        Title="بررسی بازار" Name="mainWindow" Height="300" Width="400" FontFamily="{StaticResource IRANSans}">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        Title="بررسی بازار" Name="mainWindow" Height="600" Width="400" FontFamily="{StaticResource Vazir}">
     <Window.Resources>
         <vm:StartViewModel x:Key="StartViewModel"/>
     </Window.Resources>
     <Grid FlowDirection="RightToLeft" Margin="3,3,3,3">
-        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10">
+        <DataGrid Name="gridCompany" ItemsSource="{Binding CompanyList}" AutoGenerateColumns="False" HorizontalAlignment="Center" Width="Auto" Height="500" VerticalAlignment="Top" Margin="10,10,10,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="نام" Width="100" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="آدرس" Width="175" Binding="{Binding Url}" />
-                <DataGridTextColumn Header="تهدید (٪)" Width="75" Binding="{Binding ThreatPercentage}" />
+                <DataGridTextColumn Header="تهدید (٪)" Width="80" Binding="{Binding ThreatPercentage}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="بعدی" Command="{Binding NextLevelCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="25" Margin="10,0,0,10"/>
+        <Button Name="btnSubmit" Content="بعدی" Command="{Binding NextLevelCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15"  Width="100" Style="{StaticResource MaterialDesignRaisedAccentButton}" />
     </Grid>
 </Window>

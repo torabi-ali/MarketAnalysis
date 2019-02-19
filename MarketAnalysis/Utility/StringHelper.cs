@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace MarketAnalysis.Helpers
+namespace MarketAnalysis.Utility
 {
     public static class StringHelper
     {
@@ -18,6 +17,24 @@ namespace MarketAnalysis.Helpers
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
 
+        public static string RemoveMaskChar(this string input)
+        {
+            var result = input.Replace("-", "");
+            return result;
+        }
+
+        public static List<KeyValuePair<string, string>> GetParameters(string parameters)
+        {
+            return parameters.Split('/').Select(p =>
+            {
+                if (p.Contains("-"))
+                {
+                    var arr = p.Split('-');
+                    return new KeyValuePair<string, string>(arr[0].ToLower(), arr[1]);
+                }
+                return new KeyValuePair<string, string>(null, p);
+            }).ToList();
+        }
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source.IndexOf(toCheck, comp) >= 0;
@@ -31,18 +48,12 @@ namespace MarketAnalysis.Helpers
 
         public static string NullIfEmpty(this string str)
         {
-            return (str == "" ? null : str);
+            return str == "" ? null : str;
         }
 
         public static string EmptyIfNull(this string str)
         {
-            return (str == null ? "" : str);
-        }
-
-        public static string Summary(this string str, int lenght, bool hasDot = false)
-        {
-            if (str.Length < lenght) return str;
-            else return str.Substring(0, lenght - (hasDot ? 4 : 0)) + (hasDot ? " ..." : "");
+            return str == null ? "" : str;
         }
 
         /// <summary>
@@ -126,6 +137,7 @@ namespace MarketAnalysis.Helpers
             char[] a = str.ToCharArray();
             a[0] = char.ToLower(a[0]);
             return new string(a);
+            //return str.Substring(0, 1).ToLower() + str.Substring(1);
         }
 
         public static string ToUpperFirst(this string str)
@@ -133,6 +145,7 @@ namespace MarketAnalysis.Helpers
             char[] a = str.ToCharArray();
             a[0] = char.ToUpper(a[0]);
             return new string(a);
+            //return str.Substring(0, 1).ToUpper() + (str.Length > 1 ? str.Substring(1) : "");
         }
 
         /// <summary>
@@ -186,7 +199,12 @@ namespace MarketAnalysis.Helpers
 
         public static string FixPersianChars(this string str)
         {
-            return str.Replace("ﮎ", "ک").Replace("ﮏ", "ک").Replace("ﮐ", "ک").Replace("ﮑ", "ک").Replace("ك", "ک").Replace("ي", "ی").Replace(" ", " ").Replace("‌", " ");//.Replace("ئ", "ی");
+            var result = str.Replace('ﮎ', 'ک').Replace('ﮏ', 'ک').Replace('ﮐ', 'ک').Replace('ﮑ', 'ک').Replace('ك', 'ک'); // تصحیح ک
+            result = result.Replace('ٱ', 'ا').Replace('ٵ', 'ا'); // تصحیح الف
+            result = result.Replace('ي', 'ی').Replace('ئ', 'ی'); // تصحیح ی
+            result = result.Replace('ة', 'ه'); // تصحیح ه
+            result = result.Replace(' ', ' ');
+            return result;
         }
 
         public static string CleanString(this string str)
@@ -196,13 +214,113 @@ namespace MarketAnalysis.Helpers
 
         public static string RemoveLetters(this string text)
         {
-            return Regex.Replace(text, "[^0-9.]", "");
+            if (!string.IsNullOrEmpty(text))
+            {
+                return Regex.Replace(text, "[^0-9.]", "");
+
+            }
+            return null;
+        }
+
+        public static string RemoveNumericFormat(this string input)
+        {
+            var result = input
+                .Replace(",", "")
+                .Replace("%", "")
+                .Replace("(", "")
+                .Replace(")", "")
+                .Trim();
+
+            return result;
         }
 
         public static string RemoveStr(this string text, params string[] strs)
         {
             strs.ForEach(p => text = text.Replace(p, ""));
             return text;
+        }
+
+        private static List<KeyValuePair<char, char>> _characters = new List<KeyValuePair<char, char>>
+        {
+            new KeyValuePair<char, char>('q', 'ض'),
+            new KeyValuePair<char, char>('w', 'ص'), //«»:ةيژؤBإأء
+            new KeyValuePair<char, char>('e', 'ث'),
+            new KeyValuePair<char, char>('r', 'ق'),
+            new KeyValuePair<char, char>('t', 'ف'),
+            new KeyValuePair<char, char>('T', '،'), //***
+            new KeyValuePair<char, char>('y', 'غ'),
+            new KeyValuePair<char, char>('Y', '؛'), //***
+            new KeyValuePair<char, char>('u', 'ع'),
+            new KeyValuePair<char, char>('i', 'ه'),
+            new KeyValuePair<char, char>('o', 'خ'),
+            new KeyValuePair<char, char>('p', 'ح'),
+            new KeyValuePair<char, char>('[', 'ج'),
+            new KeyValuePair<char, char>(']', 'چ'),
+            new KeyValuePair<char, char>('\\', 'پ'),
+            new KeyValuePair<char, char>('a', 'ش'),
+            new KeyValuePair<char, char>('s', 'س'),
+            new KeyValuePair<char, char>('d', 'ی'),
+            new KeyValuePair<char, char>('f', 'ب'),
+            new KeyValuePair<char, char>('g', 'ل'),
+            new KeyValuePair<char, char>('G', 'ۀ'), //***
+            new KeyValuePair<char, char>('h', 'ا'),
+            new KeyValuePair<char, char>('H', 'آ'), //***
+            new KeyValuePair<char, char>('j', 'ت'),
+            new KeyValuePair<char, char>('J', 'ـ'), //***
+            new KeyValuePair<char, char>('k', 'ن'),
+            new KeyValuePair<char, char>('K', '«'), //***
+            new KeyValuePair<char, char>('l', 'م'),
+            new KeyValuePair<char, char>('L', '»'), //***
+            new KeyValuePair<char, char>(';', 'ک'),
+            new KeyValuePair<char, char>('\'', 'گ'),
+            new KeyValuePair<char, char>('z', 'ظ'),
+            new KeyValuePair<char, char>('x', 'ط'),
+            new KeyValuePair<char, char>('c', 'ز'),
+            new KeyValuePair<char, char>('C', 'ژ'), //***
+            new KeyValuePair<char, char>('v', 'ر'),
+            new KeyValuePair<char, char>('V', 'ؤ'), //***
+            new KeyValuePair<char, char>('b', 'ذ'),
+            new KeyValuePair<char, char>('B', 'إ'), //***
+            new KeyValuePair<char, char>('n', 'د'),
+            new KeyValuePair<char, char>('N', 'أ'), //***
+            new KeyValuePair<char, char>('m', 'ئ'),
+            new KeyValuePair<char, char>('M', 'ء'), //***
+            new KeyValuePair<char, char>(',', 'و')
+        };
+
+        public static string IncorrectEnglishToFarsi(string text)
+        {
+            if (text == null)
+                return null;
+
+            var result = "";
+            foreach (var item in text)
+            {
+                var aaa = _characters.Where(p => p.Key == item).Select(p => new { p.Value }).SingleOrDefault();
+                if (aaa == null)
+                {
+                    var lower = item.ToString().ToLower()[0];
+                    aaa = _characters.Where(p => p.Key == lower).Select(p => new { p.Value }).SingleOrDefault();
+                }
+                var ch = aaa?.Value ?? item;
+                result += ch;
+            }
+            return result;
+        }
+
+        public static string FarsiToIncorrectEnglish(string text)
+        {
+            if (text == null)
+                return null;
+
+            var result = "";
+            foreach (var item in text)
+            {
+                var aaa = _characters.Where(p => p.Value == item).Select(p => new { p.Key }).SingleOrDefault();
+                var ch = aaa?.Key ?? item;
+                result += ch;
+            }
+            return result;
         }
     }
 }

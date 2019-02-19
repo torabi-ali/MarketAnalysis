@@ -43,21 +43,38 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.6.17.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.6.17\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.9.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.9.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.9.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.9.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -79,6 +96,12 @@
     <Compile Include="Data\ApplicationData.cs" />
     <Compile Include="Helpers\DialogCloser.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Utility\ConvertorHelper.cs" />
+    <Compile Include="Utility\EnumExtension.cs" />
+    <Compile Include="Utility\IEnumerableHelper.cs" />
+    <Compile Include="Utility\ReflectionHelper.cs" />
+    <Compile Include="Utility\StringHelper.cs" />
+    <Compile Include="Utility\ValidationHelper.cs" />
     <Compile Include="ViewModel\AnalyseViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
@@ -95,11 +118,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\CommonUtility.cs" />
-    <Compile Include="Helpers\ConvertorHelper.cs" />
-    <Compile Include="Helpers\EnumExtensions.cs" />
-    <Compile Include="Helpers\IEnumerableHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="View\AnalyseWindow.xaml.cs">
       <DependentUpon>AnalyseWindow.xaml</DependentUpon>
     </Compile>
@@ -142,11 +160,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resource\fonts\IRANSans-Bold.ttf" />
-    <Resource Include="Resource\fonts\IRANSans-Light.ttf" />
-    <Resource Include="Resource\fonts\IRANSans-Medium.ttf" />
-    <Resource Include="Resource\fonts\IRANSans-UltraLight.ttf" />
-    <Resource Include="Resource\fonts\IRANSans.ttf" />
+    <Resource Include="Resource\fonts\Vazir-Black.ttf" />
+    <Resource Include="Resource\fonts\Vazir-Bold.ttf" />
+    <Resource Include="Resource\fonts\Vazir-Light.ttf" />
+    <Resource Include="Resource\fonts\Vazir-Medium.ttf" />
+    <Resource Include="Resource\fonts\Vazir-Thin.ttf" />
+    <Resource Include="Resource\fonts\Vazir.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

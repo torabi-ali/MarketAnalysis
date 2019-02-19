@@ -20,7 +20,6 @@ namespace MarketAnalysis.ViewModel
         public BaseViewModel()
         {
             CompanyList = new ObservableCollection<Company>();
-            LoadState();
         }
 
         internal void RaisePropertyChanged(string prop)

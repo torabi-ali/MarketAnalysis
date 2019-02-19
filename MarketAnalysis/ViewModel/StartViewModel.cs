@@ -9,11 +9,13 @@ namespace MarketAnalysis.ViewModel
 
         public StartViewModel()
         {
+            LoadState();
             NextLevelCommand = new RelayCommand(NextLevel);
         }
 
         private void NextLevel(object parameter)
         {
+            SaveState();
             CloseWindow();
 
             var analyseWindow = new AnalyseWindow();

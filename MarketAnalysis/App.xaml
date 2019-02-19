@@ -3,6 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="View/StartWindow.xaml">
     <Application.Resources>
-        <FontFamily x:Key="IRANSans">pack://application:,,,/Resource/fonts/#IRANSansWeb(FaNum)</FontFamily>
+        <ResourceDictionary>
+            <FontFamily x:Key="Vazir">pack://application:,,,/Resource/Fonts/#Vazir</FontFamily>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

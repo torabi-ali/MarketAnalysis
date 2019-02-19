@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using MarketAnalysis.Helpers;
+using MarketAnalysis.Utility;
 using System;
 using System.Threading;
 

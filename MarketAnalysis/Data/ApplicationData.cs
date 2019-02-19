@@ -3,27 +3,31 @@ using MarketAnalysis.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using static System.Environment;
 
 namespace MarketAnalysis.Data
 {
     public class ApplicationData
     {
-        private string DataFolder;
         private const string DbName = "MarketAnalysis.db";
-        private const string CsvName = "MarketAnalysis.csv";
-        private string DbPath;
+        private const string DataName = "MarketAnalysis.csv";
+        private string DataFolder;
+        private string DataFile;
+        private string DbFolder;
+        private string DbFile;
 
         public ApplicationData()
         {
-            DataFolder = GetFolderPath(SpecialFolder.Desktop);
-            DbPath = $"{DataFolder}\\{DbName}";
+            DataFolder = Properties.Settings.Default.DefaultPath;
+            DataFile = $"{DataFolder}\\{DataName}";
+            DbFolder = Properties.Settings.Default.DbPath;
+            DbFile = $"{DbFolder}\\{DbName}";
         }
 
         public void Insert(Company company)
         {
-            using (var db = new LiteDatabase(DbPath))
+            using (var db = new LiteDatabase(DbFolder))
             {
                 var companies = db.GetCollection<Company>("Companies");
                 companies.Insert(company);
@@ -40,7 +44,7 @@ namespace MarketAnalysis.Data
 
         public void Update(Company company)
         {
-            using (var db = new LiteDatabase(DbPath))
+            using (var db = new LiteDatabase(DbFile))
             {
                 var companies = db.GetCollection<Company>("Companies");
                 companies.Update(company);
@@ -57,7 +61,7 @@ namespace MarketAnalysis.Data
 
         public void UpdateOrInsert(Company company)
         {
-            using (var db = new LiteDatabase(DbPath))
+            using (var db = new LiteDatabase(DbFile))
             {
                 var companies = db.GetCollection<Company>("Companies");
                 var update = companies.Update(company);
@@ -76,10 +80,10 @@ namespace MarketAnalysis.Data
 
         public IEnumerable<Company> GetAll()
         {
-            using (var db = new LiteDatabase(DbPath))
+            using (var db = new LiteDatabase(DbFile))
             {
                 var companies = db.GetCollection<Company>("Companies");
-                return companies.FindAll();
+                return companies.FindAll().ToArray();
             }
         }
 
@@ -91,26 +95,18 @@ namespace MarketAnalysis.Data
                 data += item.CompanyToCSV();
             }
 
-            var filepath = $"{DataFolder}\\{CsvName}";
-
-            if (!File.Exists(filepath))
+            if (!File.Exists(DataFile))
             {
                 try
                 {
-                    FileStream fs = File.Create(filepath);
+                    FileStream fs = File.Create(DataFile);
                     fs.Close();
                 }
                 catch (Exception)
                 {
                 }
             }
-            File.WriteAllText(filepath, data, Encoding.UTF8);
-
-
-            using (StreamWriter writer = new StreamWriter(filepath, true, Encoding.UTF8))
-            {
-                writer.WriteLine(data);
-            }
+            File.WriteAllText(DataFile, data, Encoding.UTF8);
         }
     }
 }
