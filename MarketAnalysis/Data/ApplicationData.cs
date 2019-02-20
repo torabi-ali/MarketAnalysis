@@ -10,24 +10,22 @@ namespace MarketAnalysis.Data
 {
     public class ApplicationData
     {
-        private const string DbName = "MarketAnalysis.db";
-        private const string DataName = "MarketAnalysis.csv";
+        private const string DbFileName = "MarketAnalysis.db";
+        private const string DataFileName = "MarketAnalysis.csv";
         private string DataFolder;
         private string DataFile;
-        private string DbFolder;
         private string DbFile;
 
         public ApplicationData()
         {
             DataFolder = Properties.Settings.Default.DefaultPath;
-            DataFile = $"{DataFolder}\\{DataName}";
-            DbFolder = Properties.Settings.Default.DbPath;
-            DbFile = $"{DbFolder}\\{DbName}";
+            DataFile = $"{DataFolder}{DataFileName}";
+            DbFile = $"{DataFolder}{DbFileName}";
         }
 
         public void Insert(Company company)
         {
-            using (var db = new LiteDatabase(DbFolder))
+            using (var db = new LiteDatabase(DbFile))
             {
                 var companies = db.GetCollection<Company>("Companies");
                 companies.Insert(company);

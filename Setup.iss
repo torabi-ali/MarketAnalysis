@@ -15,6 +15,7 @@ AppUpdatesURL=https://github.com/torabi-ali/MarketAnalysis
 DefaultDirName={pf}\MarketAnalysis
 DisableProgramGroupPage=yes
 OutputBaseFilename=MarketAnalysis-Setup
+OutputDir=Setup
 Compression=lzma
 SolidCompression=yes
 
@@ -26,7 +27,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\Ali\Documents\Visual Studio 2017\Projects\MarketAnalysis\MarketAnalysis\bin\Debug\MarketAnalysis.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Ali\Documents\Visual Studio 2017\Projects\MarketAnalysis\MarketAnalysis\bin\Debug\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Ali\Documents\Visual Studio 2017\Projects\MarketAnalysis\MarketAnalysis\bin\Debug\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Ali\Documents\Visual Studio 2017\Projects\MarketAnalysis\MarketAnalysis\bin\Debug\*.xml"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

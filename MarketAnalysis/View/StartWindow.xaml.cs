@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 using System.Windows;
 using static System.Environment;
 
@@ -12,8 +11,8 @@ namespace MarketAnalysis.View
     {
         public StartWindow()
         {
-            InitializeComponent();
             Initialization();
+            InitializeComponent();
         }
 
         public void Initialization()
@@ -21,15 +20,11 @@ namespace MarketAnalysis.View
             if (string.IsNullOrEmpty(Properties.Settings.Default.DefaultPath))
             {
                 Properties.Settings.Default.DefaultPath = $"{GetFolderPath(SpecialFolder.Desktop)}\\MarketAnalysis\\";
-                if (!Directory.Exists(Properties.Settings.Default.DefaultPath))
-                {
-                    Directory.CreateDirectory(Properties.Settings.Default.DefaultPath);
-                }
             }
 
-            if (string.IsNullOrEmpty(Properties.Settings.Default.DbPath))
+            if (!Directory.Exists(Properties.Settings.Default.DefaultPath))
             {
-                Properties.Settings.Default.DbPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                Directory.CreateDirectory(Properties.Settings.Default.DefaultPath);
             }
 
             Properties.Settings.Default.Save();
