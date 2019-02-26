@@ -1,7 +1,6 @@
 ﻿using MarketAnalysis.Helpers;
-using MarketAnalysis.View;
 
-namespace MarketAnalysis.ViewModel
+namespace MarketAnalysis.ViewModels
 {
     public class StartViewModel : BaseViewModel
     {

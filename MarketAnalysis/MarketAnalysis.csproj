@@ -105,14 +105,14 @@
     <Compile Include="Utility\ReflectionHelper.cs" />
     <Compile Include="Utility\StringHelper.cs" />
     <Compile Include="Utility\ValidationHelper.cs" />
-    <Compile Include="ViewModel\AnalyseViewModel.cs" />
-    <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\StartViewModel.cs" />
-    <Page Include="View\AnalyseWindow.xaml">
+    <Compile Include="ViewModels\AnalyseViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\StartViewModel.cs" />
+    <Page Include="Views\AnalyseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StartWindow.xaml">
+    <Page Include="Views\StartWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,10 +121,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\AnalyseWindow.xaml.cs">
+    <Compile Include="Views\AnalyseWindow.xaml.cs">
       <DependentUpon>AnalyseWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartWindow.xaml.cs">
+    <Compile Include="Views\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

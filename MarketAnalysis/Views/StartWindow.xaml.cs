@@ -2,7 +2,7 @@
 using System.Windows;
 using static System.Environment;
 
-namespace MarketAnalysis.View
+namespace MarketAnalysis
 {
     /// <summary>
     /// Interaction logic for StartWindow.xaml

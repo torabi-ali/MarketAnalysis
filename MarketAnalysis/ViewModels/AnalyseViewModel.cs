@@ -1,12 +1,10 @@
 ﻿using MarketAnalysis.Data;
 using MarketAnalysis.Helpers;
 using MarketAnalysis.Model;
-using MarketAnalysis.View;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MarketAnalysis.ViewModel
+namespace MarketAnalysis.ViewModels
 {
     public class AnalyseViewModel : BaseViewModel
     {

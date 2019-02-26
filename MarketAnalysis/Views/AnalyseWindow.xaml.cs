@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MarketAnalysis.View
+namespace MarketAnalysis
 {
     /// <summary>
     /// Interaction logic for AnalysisView.xaml
